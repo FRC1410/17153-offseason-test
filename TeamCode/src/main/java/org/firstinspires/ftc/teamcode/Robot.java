@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import static org.firstinspires.ftc.teamcode.Constants.*;
+
 public class Robot extends OpMode {
 
     private final Gamepad driverController = new Gamepad();
@@ -11,6 +13,7 @@ public class Robot extends OpMode {
 
     @Override
     public void init() {
+        driverController.setGamepadId(DRIVER_CONTROLLER_ID);
         drivetrain.init(hardwareMap);
     }
 
