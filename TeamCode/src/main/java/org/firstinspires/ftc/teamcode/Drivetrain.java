@@ -25,9 +25,9 @@ public class Drivetrain {
 
     private Telemetry driveTelemetry;
 
-    double xVelocity = 0;
-    double yVelocity = 0;
-    double angularVelocity = 0;
+    private double xVelocity = 0;
+    private double yVelocity = 0;
+    private double angularVelocity = 0;
 
     public Drivetrain() {
 //        this.frontLeftPIDF = new PIDFController(FRONT_LEFT_P, FRONT_LEFT_I, FRONT_LEFT_D, FRONT_LEFT_F);
