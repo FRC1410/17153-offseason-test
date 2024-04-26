@@ -25,6 +25,10 @@ public class Drivetrain {
 
     private Telemetry driveTelemetry;
 
+    double xVelocity = 0;
+    double yVelocity = 0;
+    double angularVelocity = 0;
+
     public Drivetrain() {
 //        this.frontLeftPIDF = new PIDFController(FRONT_LEFT_P, FRONT_LEFT_I, FRONT_LEFT_D, FRONT_LEFT_F);
 //        this.backLeftPIDF = new PIDFController(BACK_LEFT_P, BACK_LEFT_I, BACK_LEFT_D, BACK_LEFT_F);
@@ -56,9 +60,9 @@ public class Drivetrain {
         double frontRightVelocity = this.frontLeft.getVelocity() / DRIVETRAIN_ENCODER_TICKS / DRIVETRAIN_GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS;
         double backRightVelocity = this.frontLeft.getVelocity() / DRIVETRAIN_ENCODER_TICKS / DRIVETRAIN_GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS;
 
-        double xVelocity = (frontLeftVelocity + backLeftVelocity + frontRightVelocity + backRightVelocity) / 4;
-        double yVelocity = (backLeftVelocity + frontRightVelocity - frontLeftVelocity - backRightVelocity) / 4;
-        double angularVelocity = (frontLeftVelocity + backLeftVelocity - frontRightVelocity - backRightVelocity) /4;
+        this.xVelocity = (frontLeftVelocity + backLeftVelocity + frontRightVelocity + backRightVelocity) / 4;
+        this.yVelocity = (backLeftVelocity + frontRightVelocity - frontLeftVelocity - backRightVelocity) / 4;
+        this.angularVelocity = (frontLeftVelocity + backLeftVelocity - frontRightVelocity - backRightVelocity) /4;
 
         double robotVelocity[] = {xVelocity, yVelocity, angularVelocity};
         return robotVelocity;
