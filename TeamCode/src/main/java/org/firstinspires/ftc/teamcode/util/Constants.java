@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.util;
 
 public class Constants {
 
-    public static int DRIVER_CONTROLLER_ID = 0;
-
     // Drivetrain constants
     public static double DRIVETRAIN_ENCODER_TICKS = 28;
     public static double WHEEL_RADIUS = 0.0375;
