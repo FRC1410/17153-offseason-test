@@ -9,5 +9,7 @@ public class Constants {
     public static String FRONT_RIGHT_MOTOR_ID = "2";
     public static String BACK_RIGHT_MOTOR_ID = "3";
 
-    public static double ROBOT_MAX_SPEED = 0;
+    public static double WHEEL_RADIUS = 0.0375;
+    public static double DRIVETRAIN_MAX_RPM = 150 * (3/1);
+    public static double DRIVETRAIN_MAX_VEL = ((Math.PI * 2) * (WHEEL_RADIUS * DRIVETRAIN_MAX_RPM)) / 60;
 }

@@ -20,9 +20,9 @@ public class Robot extends OpMode {
     @Override
     public void loop() {
         drivetrain.mechanicDrive(
-                driverController.left_stick_x,
-                driverController.left_stick_y,
-                driverController.right_stick_x
+                (driverController.left_stick_x * DRIVETRAIN_MAX_VEL) * 1.1,
+                -driverController.left_stick_y * DRIVETRAIN_MAX_VEL,
+                driverController.right_stick_x * DRIVETRAIN_MAX_VEL
         );
 
         // TODO: we ball
