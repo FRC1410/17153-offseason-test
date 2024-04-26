@@ -6,10 +6,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static org.firstinspires.ftc.teamcode.util.Constants.*;
 import static org.firstinspires.ftc.teamcode.util.Tuning.*;
+import static org.firstinspires.ftc.teamcode.util.IDs.*;
 
 public class Drivetrain {
 
@@ -37,18 +39,33 @@ public class Drivetrain {
         this.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void mechanicDrive(double leftStickX, double leftStickY, double rightStickX) {
+    public void mechanicDrive(double xVelocity, double yVelocity, double angularVelocity) {
 
         double denominator =
                 Math.max(
-                        Math.abs(leftStickX) + Math.abs(leftStickY) + Math.abs(rightStickX), 1);
+                        Math.abs(xVelocity) + Math.abs(yVelocity) + Math.abs(angularVelocity), 1);
 
-        this.frontLeft.setVelocity((leftStickY + leftStickX + rightStickX) / denominator);
-        this.backLeft.setVelocity((leftStickY - leftStickX + rightStickX) / denominator);
-        this.frontRight.setVelocity((leftStickY - leftStickX - rightStickX) / denominator);
-        this.backRight.setVelocity((leftStickY + leftStickX - rightStickX) / denominator);
+        this.frontLeft.setVelocity((yVelocity + xVelocity + angularVelocity) / denominator);
+        this.backLeft.setVelocity((yVelocity - xVelocity + angularVelocity) / denominator);
+        this.frontRight.setVelocity((yVelocity - xVelocity - angularVelocity) / denominator);
+        this.backRight.setVelocity((yVelocity + xVelocity - angularVelocity) / denominator);
 
         this.driveTelemetry.update();
+    }
+
+    // TODO: There might be a bug here causing a null pointer exception
+    public double[] getVelocity() {
+        double frontLeftVelocity = this.frontLeft.getVelocity() / DRIVETRAIN_ENCODER_TICKS / DRIVETRAIN_GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS;
+        double backLeftVelocity = this.frontLeft.getVelocity() / DRIVETRAIN_ENCODER_TICKS / DRIVETRAIN_GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS;
+        double frontRightVelocity = this.frontLeft.getVelocity() / DRIVETRAIN_ENCODER_TICKS / DRIVETRAIN_GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS;
+        double backRightVelocity = this.frontLeft.getVelocity() / DRIVETRAIN_ENCODER_TICKS / DRIVETRAIN_GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS;
+
+        double xVelocity = (frontLeftVelocity + backLeftVelocity + frontRightVelocity + backRightVelocity) / 4;
+        double yVelocity = (backLeftVelocity + frontRightVelocity - frontLeftVelocity - backRightVelocity) / 4;
+        double angularVelocity = (frontLeftVelocity + backLeftVelocity - frontRightVelocity - backRightVelocity) /4;
+
+        double robotVelocity[] = {xVelocity, yVelocity, angularVelocity};
+        return robotVelocity;
     }
 
     public void init(HardwareMap hardwareMap) {
