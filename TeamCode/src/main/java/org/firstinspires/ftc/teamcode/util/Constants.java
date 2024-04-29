@@ -8,4 +8,6 @@ public class Constants {
     public static double DRIVETRAIN_GEAR_RATIO = 3;
     public static double DRIVETRAIN_MAX_RPM = 6000 * 3;
     public static double DRIVETRAIN_MAX_VEL = ((Math.PI * 2) * (WHEEL_RADIUS * DRIVETRAIN_MAX_RPM)) / 60;
+
+    public static double MAX_ARM_ENCODER_POSE = 12.0;
 }

@@ -14,4 +14,6 @@ public class IDs {
     public static String INTAKE_MOTOR_ID = "intakeMotor";
 
     public static String SLIDING_ELEVATOR_ID = "elevatorMotor";
+
+    public static String ARM_MOTOR_ID = "armMotor";
 }

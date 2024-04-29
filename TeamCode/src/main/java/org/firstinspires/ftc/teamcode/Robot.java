@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import static org.firstinspires.ftc.teamcode.util.Constants.*;
 import static org.firstinspires.ftc.teamcode.util.IDs.*;
 
+import org.firstinspires.ftc.teamcode.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.SlidingElevator;
@@ -17,6 +18,7 @@ public class Robot extends OpMode {
     private final Drivetrain drivetrain = new Drivetrain();
     private final Intake intake = new Intake();
     private final SlidingElevator slidingElevator = new SlidingElevator();
+    private final Arm arm = new Arm();
 
     @Override
     public void init() {
@@ -25,6 +27,8 @@ public class Robot extends OpMode {
         this.intake.init(hardwareMap);
 
         this.slidingElevator.init(hardwareMap);
+
+        this.arm.init(hardwareMap);
     }
 
     @Override
@@ -52,5 +56,15 @@ public class Robot extends OpMode {
 //                gamepad2.dpad_down,
 //                gamepad2.left_bumper
 //        );
+
+        this.arm.runArmMotorSimple(
+                gamepad2.left_stick_y
+        );
+
+//        this.arm.runArmMotor(
+//                gamepad2.left_stick_y
+//        );
+
+
     }
 }
