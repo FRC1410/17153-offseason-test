@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -23,8 +23,6 @@ public class Drivetrain {
 //    private PIDFController frontRightPIDF;
 //    private PIDFController backRightPIDF;
 
-    private Telemetry driveTelemetry;
-
     private double xVelocity = 0;
     private double yVelocity = 0;
     private double angularVelocity = 0;
@@ -35,22 +33,33 @@ public class Drivetrain {
 //        this.frontRightPIDF = new PIDFController(FRONT_RIGHT_P, FRONT_RIGHT_I, FRONT_RIGHT_D, FRONT_RIGHT_F);
 //        this.backRightPIDF = new PIDFController(BACK_RIGHT_P, BACK_RIGHT_I, BACK_RIGHT_D, BACK_RIGHT_F);
 
-        this.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        this.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        this.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        this.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        this.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void mechanicDrive(double xVelocity, double yVelocity, double angularVelocity) {
+    public void mechanicDrive(double xVelocity, double yVelocity, double angularVelocity, Telemetry driveTelemetry) {
 
         double denominator = Math.max(Math.abs(xVelocity) + Math.abs(yVelocity) + Math.abs(angularVelocity), 1);
 
-        this.frontLeft.setVelocity((yVelocity + xVelocity + angularVelocity) / denominator);
-        this.backLeft.setVelocity((yVelocity - xVelocity + angularVelocity) / denominator);
-        this.frontRight.setVelocity((yVelocity - xVelocity - angularVelocity) / denominator);
-        this.backRight.setVelocity((yVelocity + xVelocity - angularVelocity) / denominator);
+//        this.frontLeft.setVelocity((yVelocity + xVelocity + angularVelocity) / denominator);
+//        this.backLeft.setVelocity((yVelocity - xVelocity + angularVelocity) / denominator);
+//        this.frontRight.setVelocity((yVelocity - xVelocity - angularVelocity) / denominator);
+//        this.backRight.setVelocity((yVelocity + xVelocity - angularVelocity) / denominator);
 
-        this.driveTelemetry.update();
+        this.frontLeft.setPower((yVelocity + xVelocity + angularVelocity) / denominator);
+        this.backLeft.setPower((yVelocity - xVelocity + angularVelocity) / denominator);
+        this.frontRight.setPower((yVelocity - xVelocity - angularVelocity) / denominator);
+        this.backRight.setPower((yVelocity + xVelocity - angularVelocity) / denominator);
+
+        driveTelemetry.addData("FL power", frontLeft.getPower());
+        driveTelemetry.addData("BL power", backLeft.getPower());
+        driveTelemetry.addData("FR power", frontRight.getPower());
+        driveTelemetry.addData("BR power", backRight.getPower());
+        driveTelemetry.addData("Current velocity", getVelocity());
+
+        driveTelemetry.update();
     }
 
     // TODO: There might be a bug here causing a null pointer exception
@@ -82,15 +91,14 @@ public class Drivetrain {
         this.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         this.backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        this.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         this.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        this.driveTelemetry.addData("FL power", frontLeft.getPower());
-        this.driveTelemetry.addData("BL power", backLeft.getPower());
-        this.driveTelemetry.addData("FR power", frontRight.getPower());
-        this.driveTelemetry.addData("BR power", backRight.getPower());
-        this.driveTelemetry.addData("Current velocity", getVelocity());
     }
 }
